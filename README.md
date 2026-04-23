@@ -16,19 +16,37 @@ Stores NodeBB forum uploads in **Backblaze B2** through the S3-compatible API. F
 
 ## Install
 
+[![npm version](https://img.shields.io/npm/v/nodebb-plugin-backblaze-b2-s3-uploads.svg)](https://www.npmjs.com/package/nodebb-plugin-backblaze-b2-s3-uploads)
+[![npm downloads](https://img.shields.io/npm/dm/nodebb-plugin-backblaze-b2-s3-uploads.svg)](https://www.npmjs.com/package/nodebb-plugin-backblaze-b2-s3-uploads)
+[![license](https://img.shields.io/npm/l/nodebb-plugin-backblaze-b2-s3-uploads.svg)](LICENSE)
+
 ```bash
 cd /path/to/nodebb
-npm install git+https://github.com/sqlik/nodebb-plugin-backblaze-b2-s3-uploads.git
+npm install nodebb-plugin-backblaze-b2-s3-uploads
 ./nodebb activate nodebb-plugin-backblaze-b2-s3-uploads
+./nodebb build
 ./nodebb restart
 ```
 
-Or for local development, link the directory:
+### Cloudron
+
+Open the NodeBB app's **Web Terminal** and run:
+
+```bash
+cd /app/code
+/usr/local/bin/gosu cloudron:cloudron npm install nodebb-plugin-backblaze-b2-s3-uploads
+/usr/local/bin/gosu cloudron:cloudron ./nodebb build
+```
+
+Then restart the app from the Cloudron Dashboard. Activate via **ACP → Extend → Plugins**.
+
+### Local development
 
 ```bash
 cd /path/to/nodebb-plugin-backblaze-b2-s3-uploads && npm install
 cd /path/to/nodebb && npm install /path/to/nodebb-plugin-backblaze-b2-s3-uploads
 ./nodebb activate nodebb-plugin-backblaze-b2-s3-uploads
+./nodebb build
 ./nodebb restart
 ```
 
