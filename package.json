@@ -20,8 +20,26 @@
     "storage",
     "cdn"
   ],
-  "author": "",
+  "author": "djayt <tomasz.sawko@sqlik.com> (https://www.npmjs.com/~djayt)",
   "license": "MIT",
+  "homepage": "https://github.com/sqlik/nodebb-plugin-backblaze-b2-s3-uploads#readme",
+  "bugs": {
+    "url": "https://github.com/sqlik/nodebb-plugin-backblaze-b2-s3-uploads/issues"
+  },
+  "files": [
+    "lib/",
+    "public/lib/",
+    "public/templates/",
+    "languages/",
+    "library.js",
+    "plugin.json",
+    "LICENSE",
+    "README.md",
+    "!**/CLAUDE.md"
+  ],
+  "engines": {
+    "node": ">=18.0.0"
+  },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.600.0",
     "@aws-sdk/s3-request-presigner": "^3.600.0"
