@@ -1,0 +1,32 @@
+{
+  "name": "nodebb-plugin-backblaze-b2-s3-uploads",
+  "version": "0.1.0",
+  "description": "Stores forum uploads in Backblaze B2 via the S3-compatible API. Serves files through a permission-aware proxy with presigned URLs.",
+  "main": "library.js",
+  "scripts": {
+    "test": "echo \"No tests yet\" && exit 0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sqlik/nodebb-plugin-backblaze-b2-s3-uploads.git"
+  },
+  "keywords": [
+    "nodebb",
+    "nodebb-plugin",
+    "backblaze",
+    "b2",
+    "s3",
+    "uploads",
+    "storage",
+    "cdn"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.600.0",
+    "@aws-sdk/s3-request-presigner": "^3.600.0"
+  },
+  "nbbpm": {
+    "compatibility": "^3.0.0"
+  }
+}

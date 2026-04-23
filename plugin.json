@@ -1,0 +1,17 @@
+{
+  "id": "nodebb-plugin-backblaze-b2-s3-uploads",
+  "name": "Backblaze B2 Uploads (S3 API)",
+  "description": "Stores forum uploads in Backblaze B2 via the S3-compatible API. Serves files through a permission-aware proxy with presigned URLs.",
+  "url": "https://github.com/sqlik/nodebb-plugin-backblaze-b2-s3-uploads",
+  "library": "./library.js",
+  "hooks": [
+    { "hook": "static:app.load", "method": "init" },
+    { "hook": "filter:admin.header.build", "method": "addAdminMenu" },
+    { "hook": "filter:uploadFile", "method": "uploadFile" },
+    { "hook": "filter:uploadImage", "method": "uploadImage" },
+    { "hook": "action:post.save", "method": "associatePost" },
+    { "hook": "action:post.edit", "method": "associatePost" }
+  ],
+  "templates": "public/templates",
+  "languages": "languages"
+}
