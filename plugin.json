@@ -13,5 +13,8 @@
     { "hook": "action:post.edit", "method": "associatePost" }
   ],
   "templates": "public/templates",
-  "languages": "languages"
+  "languages": "languages",
+  "modules": {
+    "../admin/plugins/b2-uploads.js": "./public/lib/admin.js"
+  }
 }
