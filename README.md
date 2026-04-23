@@ -61,12 +61,55 @@ Open **ACP → Plugins → Backblaze B2 Uploads (S3 API)** and fill in the field
 2. Create an **Application Key** scoped to *only* that bucket, with `read+write` permissions.
 3. Optionally add a CORS rule allowing your forum origin (only matters if you add direct browser uploads later — not needed for the proxy flow).
 
+## Optional: Bunny CDN delivery
+
+By default the proxy redirects to a B2 presigned URL — every visitor pulls bytes straight from B2. If you want **edge caching, image optimization and global low-latency delivery**, enable Bunny CDN.
+
+### How it works
+
+```
+Browser → /uploads/b2/<key>            (NodeBB proxy: permission check)
+        ← 302 https://<zone>.b-cdn.net/<key>?token=...&expires=...
+Browser → Bunny edge POP (verifies token, serves from cache or pulls from B2)
+        ← bytes
+```
+
+The proxy still runs every request — permission checks remain authoritative. Only the bytes are delivered through Bunny.
+
+### Bunny dashboard setup
+
+1. **Pull Zones → Add Pull Zone**
+   - Origin Type: `Backblaze B2`
+   - Application Key ID + Application Key (from B2; can be the same key the plugin uses)
+   - Bucket name + region
+2. **Settings → Security → Token Authentication**: **ON**
+3. Copy the **Token Authentication Key** shown there
+4. (optional) **Optimizer**: ON for auto WebP/AVIF + image resize via URL params
+5. (optional) **Settings → Caching**: tune to taste
+
+### Plugin settings
+
+In the **Bunny CDN delivery** section of the ACP page, fill:
+
+| Field | Example |
+|---|---|
+| Use Bunny CDN delivery | ☑️ |
+| Bunny zone hostname | `omdm-uploads.b-cdn.net` |
+| Token Authentication Key | (from Bunny dashboard) |
+| Bunny token TTL | `0` (= same as B2 TTL) or custom |
+
+### Tradeoffs
+
+- **B2 → Bunny transfer is free** (Bandwidth Alliance) — origin pulls cost nothing
+- **Bunny → user transfer** is paid but cheap (~$0.01/GB)
+- Each visitor still hits the NodeBB proxy first for permission check — no cache bypass on auth
+
 ## Roadmap
 
-- [ ] Bunny CDN Pull Zone integration with token auth
 - [ ] Background cleanup of orphaned objects (uploads never associated with a post)
 - [ ] Migration command for existing local uploads
 - [ ] Per-user / per-group upload quotas
+- [ ] Optional IP-bound Bunny tokens
 
 ## License
 

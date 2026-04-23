@@ -27,5 +27,16 @@
 	"saved.message": "Ustawienia B2 zapisane. Połączenie zostało zainicjowane ponownie.",
 	"status.label": "Status",
 	"status.configured": "Skonfigurowane",
-	"status.not-configured": "Nieskonfigurowane"
+	"status.not-configured": "Nieskonfigurowane",
+	"status.bunny-on": "Bunny CDN aktywne",
+	"status.bunny-off": "Bezpośrednio z B2",
+	"section.bunny": "Dostarczanie przez Bunny CDN (opcjonalnie)",
+	"bunny.notice": "Po włączeniu proxy będzie przekierowywać do URL Bunny CDN z tokenem zamiast bezpośrednio do podpisanego URL B2. Bunny pobiera plik z B2 raz i cache'uje go na edge — szybsze dostarczanie + darmowy transfer B2→Bunny (Bandwidth Alliance). Sprawdzanie uprawnień nadal odbywa się przy każdym żądaniu.",
+	"field.useBunny": "Używaj Bunny CDN do dostarczania",
+	"field.bunnyHostname": "Hostname strefy Bunny",
+	"field.bunnyHostname.help": "np. <code>omdm-uploads.b-cdn.net</code> (bez <code>https://</code>, bez końcowego ukośnika)",
+	"field.bunnyTokenKey": "Token Authentication Key",
+	"field.bunnyTokenKey.help": "Z panelu Bunny: <em>Pull Zone → Security → Token Authentication Key</em>. Token Authentication musi być włączony na strefie.",
+	"field.bunnyTokenTtl": "TTL tokenu Bunny (sekundy)",
+	"field.bunnyTokenTtl.help": "Zostaw 0 aby użyć tego samego TTL co podpisane URL B2. Maks. 604800 (7 dni)."
 }

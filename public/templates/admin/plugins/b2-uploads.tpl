@@ -76,6 +76,34 @@
 						</div>
 					</div>
 				</div>
+
+				<div class="card mb-3">
+					<div class="card-header">[[b2-uploads:section.bunny]]</div>
+					<div class="card-body">
+						<div class="alert alert-info">
+							[[b2-uploads:bunny.notice]]
+						</div>
+						<div class="mb-3 form-check form-switch">
+							<input type="checkbox" class="form-check-input" id="useBunny" name="useBunny" />
+							<label class="form-check-label" for="useBunny">[[b2-uploads:field.useBunny]]</label>
+						</div>
+						<div class="mb-3">
+							<label class="form-label" for="bunnyHostname">[[b2-uploads:field.bunnyHostname]]</label>
+							<input type="text" class="form-control" id="bunnyHostname" name="bunnyHostname" placeholder="omdm-uploads.b-cdn.net" />
+							<small class="form-text text-muted">[[b2-uploads:field.bunnyHostname.help]]</small>
+						</div>
+						<div class="mb-3">
+							<label class="form-label" for="bunnyTokenKey">[[b2-uploads:field.bunnyTokenKey]]</label>
+							<input type="password" class="form-control" id="bunnyTokenKey" name="bunnyTokenKey" autocomplete="off" />
+							<small class="form-text text-muted">[[b2-uploads:field.bunnyTokenKey.help]]</small>
+						</div>
+						<div class="mb-3">
+							<label class="form-label" for="bunnyTokenTtl">[[b2-uploads:field.bunnyTokenTtl]]</label>
+							<input type="number" class="form-control" id="bunnyTokenTtl" name="bunnyTokenTtl" min="0" max="604800" />
+							<small class="form-text text-muted">[[b2-uploads:field.bunnyTokenTtl.help]]</small>
+						</div>
+					</div>
+				</div>
 			</form>
 		</div>
 
@@ -85,11 +113,18 @@
 					<button id="save" class="btn btn-primary w-100">[[b2-uploads:save]]</button>
 					<hr>
 					<p class="small text-muted mb-2">[[b2-uploads:status.label]]</p>
-					<p class="small">
+					<p class="small mb-1">
 						{{{ if configured }}}
 						<span class="badge bg-success">[[b2-uploads:status.configured]]</span>
 						{{{ else }}}
 						<span class="badge bg-warning">[[b2-uploads:status.not-configured]]</span>
+						{{{ end }}}
+					</p>
+					<p class="small">
+						{{{ if bunnyActive }}}
+						<span class="badge bg-info">[[b2-uploads:status.bunny-on]]</span>
+						{{{ else }}}
+						<span class="badge bg-secondary">[[b2-uploads:status.bunny-off]]</span>
 						{{{ end }}}
 					</p>
 				</div>

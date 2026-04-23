@@ -27,5 +27,16 @@
 	"saved.message": "B2 settings saved. Connection has been re-initialised.",
 	"status.label": "Status",
 	"status.configured": "Configured",
-	"status.not-configured": "Not configured"
+	"status.not-configured": "Not configured",
+	"status.bunny-on": "Bunny CDN active",
+	"status.bunny-off": "Direct B2 delivery",
+	"section.bunny": "Bunny CDN delivery (optional)",
+	"bunny.notice": "When enabled, the proxy will redirect to a Bunny CDN URL with a token instead of a direct B2 presigned URL. Bunny pulls from B2 once and caches at the edge — much faster delivery and free B2→Bunny transfer (Bandwidth Alliance). Permission checks still happen on every request.",
+	"field.useBunny": "Use Bunny CDN delivery",
+	"field.bunnyHostname": "Bunny zone hostname",
+	"field.bunnyHostname.help": "e.g. <code>omdm-uploads.b-cdn.net</code> (no <code>https://</code>, no trailing slash)",
+	"field.bunnyTokenKey": "Token Authentication Key",
+	"field.bunnyTokenKey.help": "From Bunny dashboard: <em>Pull Zone → Security → Token Authentication Key</em>. Token Authentication must be enabled on the zone.",
+	"field.bunnyTokenTtl": "Bunny token TTL (seconds)",
+	"field.bunnyTokenTtl.help": "Leave 0 to use the same TTL as B2 presigned URLs. Max 604800 (7 days)."
 }
