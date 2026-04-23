@@ -144,6 +144,14 @@ There is also a **Run cleanup sweep now** button in the ACP that triggers the sw
 - [ ] Per-user / per-group upload quotas
 - [ ] Optional IP-bound Bunny tokens
 
+## Support
+
+This plugin is free, MIT-licensed, and maintained in spare time. No ads, no trackers, no "pro tier" paywall. If it solved a real problem for your forum — cut your cloud storage bill by moving off S3, saved a disk partition from filling up with user uploads, or kept your private-category attachments actually private while still serving them fast through a CDN — a coffee is a nice way to say thanks.
+
+[☕ Buy me a coffee](https://buymeacoffee.com/djayt)
+
+Not required, ever. Issues and PRs are always welcome regardless.
+
 ## License
 
 MIT
