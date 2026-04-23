@@ -78,6 +78,30 @@
 				</div>
 
 				<div class="card mb-3">
+					<div class="card-header">[[b2-uploads:section.maintenance]]</div>
+					<div class="card-body">
+						<div class="alert alert-info">
+							[[b2-uploads:maintenance.notice]]
+						</div>
+						<div class="mb-3 form-check form-switch">
+							<input type="checkbox" class="form-check-input" id="cleanupEnabled" name="cleanupEnabled" />
+							<label class="form-check-label" for="cleanupEnabled">[[b2-uploads:field.cleanupEnabled]]</label>
+						</div>
+						<div class="mb-3">
+							<label class="form-label" for="cleanupAgeHours">[[b2-uploads:field.cleanupAgeHours]]</label>
+							<input type="number" class="form-control" id="cleanupAgeHours" name="cleanupAgeHours" min="1" />
+							<small class="form-text text-muted">[[b2-uploads:field.cleanupAgeHours.help]]</small>
+						</div>
+						<div class="mb-3">
+							<label class="form-label" for="cleanupIntervalHours">[[b2-uploads:field.cleanupIntervalHours]]</label>
+							<input type="number" class="form-control" id="cleanupIntervalHours" name="cleanupIntervalHours" min="1" />
+							<small class="form-text text-muted">[[b2-uploads:field.cleanupIntervalHours.help]]</small>
+						</div>
+						<button type="button" id="sweep-now" class="btn btn-outline-secondary btn-sm">[[b2-uploads:maintenance.runNow]]</button>
+					</div>
+				</div>
+
+				<div class="card mb-3">
 					<div class="card-header">[[b2-uploads:section.bunny]]</div>
 					<div class="card-body">
 						<div class="alert alert-info">

@@ -38,5 +38,14 @@
 	"field.bunnyTokenKey": "Token Authentication Key",
 	"field.bunnyTokenKey.help": "From Bunny dashboard: <em>Pull Zone → Security → Token Authentication Key</em>. Token Authentication must be enabled on the zone.",
 	"field.bunnyTokenTtl": "Bunny token TTL (seconds)",
-	"field.bunnyTokenTtl.help": "Leave 0 to use the same TTL as B2 presigned URLs. Max 604800 (7 days)."
+	"field.bunnyTokenTtl.help": "Leave 0 to use the same TTL as B2 presigned URLs. Max 604800 (7 days).",
+	"section.maintenance": "Maintenance",
+	"maintenance.notice": "Files uploaded but never used in a saved post become orphans. Periodically the plugin scans for orphans older than the threshold and removes them from B2 plus their metadata from the database.",
+	"maintenance.runNow": "Run cleanup sweep now",
+	"maintenance.sweptTitle": "Cleanup finished",
+	"field.cleanupEnabled": "Enable scheduled orphan cleanup",
+	"field.cleanupAgeHours": "Delete orphans older than (hours)",
+	"field.cleanupAgeHours.help": "Default 24. Anything below 1 is clamped to 1.",
+	"field.cleanupIntervalHours": "Sweep interval (hours)",
+	"field.cleanupIntervalHours.help": "How often the background sweep runs. Default 6."
 }

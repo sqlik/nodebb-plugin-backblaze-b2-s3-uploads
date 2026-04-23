@@ -25,4 +25,22 @@ export function init() {
 			});
 		});
 	});
+
+	$('#sweep-now').on('click', () => {
+		const $btn = $('#sweep-now');
+		$btn.prop('disabled', true);
+		socket.emit('plugins.b2-uploads.sweepNow', {}, (err, result) => {
+			$btn.prop('disabled', false);
+			if (err) {
+				alerts.error(err);
+				return;
+			}
+			alerts.alert({
+				type: 'success',
+				title: '[[b2-uploads:maintenance.sweptTitle]]',
+				message: `scanned=${result.scanned} deleted=${result.deleted} failed=${result.failed}`,
+				timeout: 4000,
+			});
+		});
+	});
 }

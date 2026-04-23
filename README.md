@@ -104,10 +104,25 @@ In the **Bunny CDN delivery** section of the ACP page, fill:
 - **Bunny → user transfer** is paid but cheap (~$0.01/GB)
 - Each visitor still hits the NodeBB proxy first for permission check — no cache bypass on auth
 
+## Maintenance: orphan cleanup
+
+Files uploaded but never used in a saved post become orphans (e.g. user opens the composer, drops an image, then closes the tab without submitting). The plugin tracks every upload in a sorted set `b2-uploads:orphans`; the entry is removed on `action:post.save` / `action:post.edit` once the upload is referenced from a saved post.
+
+A background sweep runs every `cleanupIntervalHours` (default 6h). Anything still in the orphans set older than `cleanupAgeHours` (default 24h) is deleted from B2 and from the database.
+
+ACP fields:
+
+| Field | Default | Notes |
+|---|---|---|
+| Enable scheduled orphan cleanup | ON | Disables the background timer when off |
+| Delete orphans older than (hours) | `24` | Generous grace window — covers slow drafts |
+| Sweep interval (hours) | `6` | How often the timer fires |
+
+There is also a **Run cleanup sweep now** button in the ACP that triggers the sweep immediately and reports `scanned / deleted / failed` counts.
+
 ## Roadmap
 
-- [ ] Background cleanup of orphaned objects (uploads never associated with a post)
-- [ ] Migration command for existing local uploads
+- [ ] Migration command for existing local uploads (with dry-run mode)
 - [ ] Per-user / per-group upload quotas
 - [ ] Optional IP-bound Bunny tokens
 

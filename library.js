@@ -8,6 +8,7 @@ const upload = require('./lib/upload');
 const associate = require('./lib/associate');
 const proxy = require('./lib/proxy');
 const admin = require('./lib/admin');
+const cleanup = require('./lib/cleanup');
 
 const plugin = {};
 
@@ -21,6 +22,7 @@ plugin.init = async (params) => {
 
 	await settings.load();
 	client.invalidate();
+	cleanup.start();
 
 	const sockets = require.main.require('./src/socket.io/plugins');
 	sockets['b2-uploads'] = sockets['b2-uploads'] || {};
@@ -30,7 +32,14 @@ plugin.init = async (params) => {
 		if (!isAdmin) throw new Error('[[error:no-privileges]]');
 		await settings.load();
 		client.invalidate();
+		cleanup.start();
 		return { ok: true };
+	};
+	sockets['b2-uploads'].sweepNow = async (socket) => {
+		const user = require.main.require('./src/user');
+		const isAdmin = await user.isAdministrator(socket.uid);
+		if (!isAdmin) throw new Error('[[error:no-privileges]]');
+		return cleanup.sweep();
 	};
 
 	winston.verbose('[plugin/b2-uploads] initialised (configured=' + settings.isConfigured() + ')');

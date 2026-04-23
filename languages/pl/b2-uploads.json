@@ -38,5 +38,14 @@
 	"field.bunnyTokenKey": "Token Authentication Key",
 	"field.bunnyTokenKey.help": "Z panelu Bunny: <em>Pull Zone → Security → Token Authentication Key</em>. Token Authentication musi być włączony na strefie.",
 	"field.bunnyTokenTtl": "TTL tokenu Bunny (sekundy)",
-	"field.bunnyTokenTtl.help": "Zostaw 0 aby użyć tego samego TTL co podpisane URL B2. Maks. 604800 (7 dni)."
+	"field.bunnyTokenTtl.help": "Zostaw 0 aby użyć tego samego TTL co podpisane URL B2. Maks. 604800 (7 dni).",
+	"section.maintenance": "Utrzymanie",
+	"maintenance.notice": "Pliki wgrane, ale nigdy nieużyte w zapisanym poście, są \"sierotami\". Wtyczka okresowo skanuje sieroty starsze od progu i usuwa je z B2 wraz z metadanymi z bazy.",
+	"maintenance.runNow": "Uruchom czyszczenie teraz",
+	"maintenance.sweptTitle": "Czyszczenie zakończone",
+	"field.cleanupEnabled": "Włącz cykliczne czyszczenie sierot",
+	"field.cleanupAgeHours": "Usuwaj sieroty starsze niż (godziny)",
+	"field.cleanupAgeHours.help": "Domyślnie 24. Wartości poniżej 1 są przycinane do 1.",
+	"field.cleanupIntervalHours": "Częstotliwość skanowania (godziny)",
+	"field.cleanupIntervalHours.help": "Jak często uruchamia się czyszczenie w tle. Domyślnie 6."
 }
