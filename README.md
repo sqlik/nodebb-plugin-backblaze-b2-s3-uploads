@@ -1,5 +1,8 @@
 # nodebb-plugin-backblaze-b2-s3-uploads
 
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![Buy Me A Coffee](https://img.shields.io/badge/Buy%20me%20a%20coffee-sqlik-FFDD00?logo=buy-me-a-coffee&logoColor=black)](https://buymeacoffee.com/sqlik)
+
 Stores NodeBB forum uploads in **Backblaze B2** through the S3-compatible API. Files are served through a permission-aware proxy that issues short-lived presigned URLs, so:
 
 - Uploads in **public categories** are reachable by anonymous visitors (still through the proxy, which checks `topics:read` for guests).
@@ -148,7 +151,7 @@ There is also a **Run cleanup sweep now** button in the ACP that triggers the sw
 
 This plugin is free, MIT-licensed, and maintained in spare time. No ads, no trackers, no "pro tier" paywall. If it solved a real problem for your forum — cut your cloud storage bill by moving off S3, saved a disk partition from filling up with user uploads, or kept your private-category attachments actually private while still serving them fast through a CDN — a coffee is a nice way to say thanks.
 
-[☕ Buy me a coffee](https://buymeacoffee.com/djayt)
+[☕ Buy me a coffee](https://buymeacoffee.com/sqlik)
 
 Not required, ever. Issues and PRs are always welcome regardless.
 
