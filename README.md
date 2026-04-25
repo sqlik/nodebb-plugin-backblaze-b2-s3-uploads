@@ -11,11 +11,23 @@ Stores NodeBB forum uploads in **Backblaze B2** through the S3-compatible API. F
 
 ## How it works
 
-1. User uploads a file. Plugin intercepts `filter:uploadFile` / `filter:uploadImage`, streams the file to B2, stores `{uid, name, type, size}` keyed by the B2 object key in NodeBB's database.
+1. User uploads a file via the composer (post body) or as a topic thumbnail. Plugin intercepts `filter:uploadFile` / `filter:uploadImage` for `folder='files'`, streams the file to B2, stores `{uid, name, type, size}` keyed by the B2 object key in NodeBB's database.
 2. Post content references the file as `/uploads/b2/<key>`.
-3. On `action:post.save` / `action:post.edit`, the plugin scans the post and links each referenced key to `{pid, tid, cid}`.
-4. When a browser requests `/uploads/b2/<key>`, the plugin checks `privileges.categories.can('topics:read', cid, uid)`, generates a fresh presigned URL with TTL from settings, and 302-redirects.
-5. The 302 is `Cache-Control: private, max-age=(TTL - 60s)` so the browser doesn't hit NodeBB on every image load.
+3. On `action:post.save` / `action:post.edit`, the plugin diffs the post's previously-tracked keys against the URLs in current content. New references get linked to `{pid, tid, cid}`; references that disappeared get re-orphaned (so the cleanup sweep eventually removes them).
+4. On `action:topic.post`, B2 paths in `topic.thumbs` are linked to the topic's main post — same lifecycle as body URLs.
+5. When a browser requests `/uploads/b2/<key>`, the plugin checks `privileges.categories.can('topics:read', cid, uid)`, generates a fresh presigned URL with TTL from settings, and 302-redirects.
+6. The 302 is `Cache-Control: private, max-age=(TTL - 60s)` so the browser doesn't hit NodeBB on every image load.
+
+### What stays local
+
+System uploads — **profile pictures**, **group covers**, **category icons** — pass through to NodeBB's native local storage (via `file.saveFileToLocal`). Their lifecycle is wired into NodeBB core (e.g. old avatar deleted on change, group cover removed when group is deleted), so trying to mirror that into B2 would create a separate set of leaks. The cost saving from offloading them is negligible compared to post attachments.
+
+### Cleanup lifecycle
+
+- **Composer abandons** (file uploaded, post never submitted) → entry sits in `b2-uploads:orphans`, sweep deletes it after `cleanupAgeHours` (default 24h).
+- **Edit removes a file from a post** → re-orphaned, swept on next cycle.
+- **Post purged** (`action:post.purge`) → file deleted from B2 immediately, all DB references removed. Cascades from `topic.purge` and `user.delete`.
+- **Soft-delete** (post hidden but not purged) → file kept; allows restore.
 
 ## Profile & GDPR integration
 
@@ -23,7 +35,7 @@ NodeBB's native **profile uploads tab** (`/user/<slug>/uploads`) and **GDPR data
 
 This plugin patches both:
 
-- **Profile uploads tab** — hooks `filter:account/uploads.build` and merges B2 entries into the rendered list. Each entry links back through `/uploads/b2/<key>`, so the same permission check + Bunny/B2 redirect runs as on regular post images.
+- **Profile uploads tab** — hooks `filter:account/uploads.build` and merges B2 entries into the rendered list. Each entry links back through `/uploads/b2/<key>`, so the same permission check + Bunny/B2 redirect runs as on regular post images. The sidebar's "Uploads" count is also augmented via `filter:helpers.getUserDataByUserSlug`.
 - **GDPR uploads export** — patches `usersAPI.generateExport` to handle `type=uploads` in-process. The resulting ZIP contains native uploads (under their original paths) **plus** a `b2/` folder with all the user's B2 files. `posts` and `profile` exports are untouched and still go through NodeBB's native fork.
 
 If the patch can't be installed (NodeBB internals change in a future major), the plugin logs a warning and the export falls back to the native fork — i.e. you lose B2 files in the export, but native uploads still work.
@@ -152,8 +164,19 @@ ACP fields:
 
 There is also a **Run cleanup sweep now** button in the ACP that triggers the sweep immediately and reports `scanned / deleted / failed` counts.
 
+## Known limitations
+
+- **Topic thumbnails added or removed via the API after the topic is created** — `Thumbs.associate`/`Thumbs.delete` don't fire NodeBB hooks, so changes outside the initial topic creation flow aren't tracked. Removing a thumbnail this way will leak the file in B2 until manual cleanup.
+- **Multi-reference (same B2 URL pasted into a second post)** — tracking is last-write-wins. Purging the most recently saved post will delete the file even if another post still references it. Rare in practice but the second post's image will 404.
+- **Delete button in the profile uploads tab is a no-op for B2 entries** — the native deletion flow is wired to local-disk paths only. Use post edit/purge to remove B2 files.
+
+These are slated for the v0.3.0 milestone (proper reverse index `b2-upload:<key>:pids` + monkey-patch coverage for the missing hook points).
+
 ## Roadmap
 
+- [ ] Reverse index for multi-reference correctness
+- [ ] Monkey-patch `Thumbs.associate`/`delete` so post-creation thumbnail edits track properly
+- [ ] B2-aware delete in the profile uploads tab
 - [ ] Migration command for existing local uploads (with dry-run mode)
 - [ ] Per-user / per-group upload quotas
 - [ ] Optional IP-bound Bunny tokens
