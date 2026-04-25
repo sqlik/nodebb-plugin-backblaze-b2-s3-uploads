@@ -1,6 +1,6 @@
 {
   "name": "nodebb-plugin-backblaze-b2-s3-uploads",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "Stores forum uploads in Backblaze B2 via the S3-compatible API. Serves files through a permission-aware proxy with presigned URLs.",
   "main": "library.js",
   "scripts": {

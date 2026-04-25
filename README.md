@@ -17,6 +17,17 @@ Stores NodeBB forum uploads in **Backblaze B2** through the S3-compatible API. F
 4. When a browser requests `/uploads/b2/<key>`, the plugin checks `privileges.categories.can('topics:read', cid, uid)`, generates a fresh presigned URL with TTL from settings, and 302-redirects.
 5. The 302 is `Cache-Control: private, max-age=(TTL - 60s)` so the browser doesn't hit NodeBB on every image load.
 
+## Profile & GDPR integration
+
+NodeBB's native **profile uploads tab** (`/user/<slug>/uploads`) and **GDPR data export** (Settings → Data Export → Uploads) only see files stored on the local disk. Without integration, files uploaded through this plugin are invisible to both.
+
+This plugin patches both:
+
+- **Profile uploads tab** — hooks `filter:account/uploads.build` and merges B2 entries into the rendered list. Each entry links back through `/uploads/b2/<key>`, so the same permission check + Bunny/B2 redirect runs as on regular post images.
+- **GDPR uploads export** — patches `usersAPI.generateExport` to handle `type=uploads` in-process. The resulting ZIP contains native uploads (under their original paths) **plus** a `b2/` folder with all the user's B2 files. `posts` and `profile` exports are untouched and still go through NodeBB's native fork.
+
+If the patch can't be installed (NodeBB internals change in a future major), the plugin logs a warning and the export falls back to the native fork — i.e. you lose B2 files in the export, but native uploads still work.
+
 ## Install
 
 [![npm version](https://img.shields.io/npm/v/nodebb-plugin-backblaze-b2-s3-uploads.svg)](https://www.npmjs.com/package/nodebb-plugin-backblaze-b2-s3-uploads)

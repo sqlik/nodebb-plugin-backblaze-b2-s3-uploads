@@ -9,6 +9,8 @@ const associate = require('./lib/associate');
 const proxy = require('./lib/proxy');
 const admin = require('./lib/admin');
 const cleanup = require('./lib/cleanup');
+const profile = require('./lib/profile');
+const exporter = require('./lib/export');
 
 const plugin = {};
 
@@ -23,6 +25,7 @@ plugin.init = async (params) => {
 	await settings.load();
 	client.invalidate();
 	cleanup.start();
+	exporter.install();
 
 	const sockets = require.main.require('./src/socket.io/plugins');
 	sockets['b2-uploads'] = sockets['b2-uploads'] || {};
@@ -57,5 +60,6 @@ plugin.addAdminMenu = async (header) => {
 plugin.uploadFile = upload.uploadFile;
 plugin.uploadImage = upload.uploadImage;
 plugin.associatePost = associate.associatePost;
+plugin.augmentProfileUploads = profile.augmentUploadsList;
 
 module.exports = plugin;
