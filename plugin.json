@@ -12,6 +12,7 @@
     { "hook": "action:post.save", "method": "associatePost" },
     { "hook": "action:post.edit", "method": "associatePost" },
     { "hook": "action:post.purge", "method": "onPostPurge" },
+    { "hook": "action:topic.post", "method": "onTopicPost" },
     { "hook": "filter:account/uploads.build", "method": "augmentProfileUploads" },
     { "hook": "filter:helpers.getUserDataByUserSlug", "method": "augmentUserCounts" }
   ],

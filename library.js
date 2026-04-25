@@ -12,6 +12,7 @@ const cleanup = require('./lib/cleanup');
 const profile = require('./lib/profile');
 const exporter = require('./lib/export');
 const dissociate = require('./lib/dissociate');
+const thumbs = require('./lib/thumbs');
 
 const plugin = {};
 
@@ -64,5 +65,6 @@ plugin.associatePost = associate.associatePost;
 plugin.augmentProfileUploads = profile.augmentUploadsList;
 plugin.augmentUserCounts = profile.augmentUserCounts;
 plugin.onPostPurge = dissociate.onPostPurge;
+plugin.onTopicPost = thumbs.onTopicPost;
 
 module.exports = plugin;
