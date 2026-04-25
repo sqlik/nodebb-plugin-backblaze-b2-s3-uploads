@@ -11,7 +11,9 @@
     { "hook": "filter:uploadImage", "method": "uploadImage" },
     { "hook": "action:post.save", "method": "associatePost" },
     { "hook": "action:post.edit", "method": "associatePost" },
-    { "hook": "filter:account/uploads.build", "method": "augmentProfileUploads" }
+    { "hook": "action:post.purge", "method": "onPostPurge" },
+    { "hook": "filter:account/uploads.build", "method": "augmentProfileUploads" },
+    { "hook": "filter:helpers.getUserDataByUserSlug", "method": "augmentUserCounts" }
   ],
   "templates": "public/templates",
   "languages": "languages",
