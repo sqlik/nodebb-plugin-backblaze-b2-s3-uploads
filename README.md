@@ -2,8 +2,6 @@
 
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Buy Me A Coffee](https://img.shields.io/badge/Buy%20me%20a%20coffee-sqlik-FFDD00?logo=buy-me-a-coffee&logoColor=black)](https://buymeacoffee.com/sqlik)
-[![npm version](https://img.shields.io/npm/v/nodebb-plugin-backblaze-b2-s3-uploads.svg)](https://www.npmjs.com/package/nodebb-plugin-backblaze-b2-s3-uploads)
-[![npm downloads](https://img.shields.io/npm/dm/nodebb-plugin-backblaze-b2-s3-uploads.svg)](https://www.npmjs.com/package/nodebb-plugin-backblaze-b2-s3-uploads)
 
 Stores NodeBB forum uploads in **Backblaze B2** through the S3-compatible API. Files are served through a permission-aware proxy that issues short-lived presigned URLs, so:
 
